@@ -8,6 +8,7 @@ interface ShortcutHandlers {
   onSettings?: () => void;
   onExamples?: () => void;
   onToggleTheme?: () => void;
+  onPresentationMode?: () => void;
 }
 
 export const useKeyboardShortcuts = (handlers: ShortcutHandlers) => {
@@ -56,6 +57,12 @@ export const useKeyboardShortcuts = (handlers: ShortcutHandlers) => {
       if (modKey && e.shiftKey && e.key === 'T') {
         e.preventDefault();
         handlers.onToggleTheme?.();
+      }
+
+      // F11 or Ctrl/Cmd + Shift + F - Presentation Mode
+      if (e.key === 'F11' || (modKey && e.shiftKey && e.key === 'F')) {
+        e.preventDefault();
+        handlers.onPresentationMode?.();
       }
 
       // ? - Show shortcuts help

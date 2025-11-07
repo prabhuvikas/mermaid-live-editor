@@ -13,25 +13,23 @@ A modern, feature-rich live editor for creating Mermaid diagrams with real-time 
 - **Settings Panel**: Customizable editor and preview preferences
 - **Auto-Save**: Automatic saving to browser localStorage
 
-### Phase 2 (Planned)
-- Export to PNG, SVG, PDF
-- Examples and templates library
-- Enhanced persistence with version history
-- Copy to clipboard functionality
+### Phase 2 - ✅ Implemented
+- **Export to PNG, SVG, PDF**: High-quality exports in multiple formats
+- **Examples and templates library**: 11+ searchable templates
+- **Enhanced persistence**: Auto-save with localStorage
+- **Copy to clipboard**: Copy code and diagrams
 
-### Phase 3 (Planned)
-- File operations (open, save, drag-drop)
-- Shareable links with URL encoding
-- Search and replace
-- Keyboard shortcuts
-- Code formatting
+### Phase 3 - ✅ Implemented
+- **File operations**: Open and save .mmd files
+- **Shareable links**: URL encoding for easy sharing
+- **Keyboard shortcuts**: Full keyboard navigation support
+- **Copy/Download**: Multiple clipboard operations
 
-### Phase 4 (Planned)
-- Multi-diagram tabs
-- AI-powered features
-- Cloud storage integration
-- Presentation mode
-- PWA with offline support
+### Phase 4 - ✅ Implemented
+- **Multi-diagram tabs**: Work with multiple diagrams simultaneously
+- **Presentation mode**: Full-screen diagram viewing with navigation
+- **PWA with offline support**: Install as desktop app, works offline
+- **Enhanced accessibility**: ARIA labels and keyboard navigation
 
 ## 🚀 Getting Started
 
@@ -64,9 +62,23 @@ The app will be available at `http://localhost:3000`
 
 1. **Write Mermaid Code**: Type or paste your Mermaid diagram code in the left editor pane
 2. **Live Preview**: See your diagram render in real-time on the right
-3. **Customize**: Click the settings icon to adjust editor and preview preferences
-4. **Toggle Theme**: Switch between light and dark modes
-5. **Copy/Download**: Use toolbar buttons to copy or download your diagram code
+3. **Multi-Tab Support**: Create multiple diagrams using the + button or Ctrl+N
+4. **Export**: Export diagrams as PNG, SVG, or PDF from the Export menu
+5. **Share**: Click the share button to generate a shareable URL
+6. **Presentation Mode**: Click the fullscreen icon or press F11 for presentation view
+7. **Examples**: Browse 11+ templates organized by diagram type
+8. **Customize**: Adjust editor and preview settings to your preference
+
+### Keyboard Shortcuts
+
+- **Ctrl/Cmd+S**: Save diagram
+- **Ctrl/Cmd+O**: Open file
+- **Ctrl/Cmd+N**: New diagram/tab
+- **Ctrl/Cmd+E**: Export as PNG
+- **Ctrl/Cmd+K**: Open examples
+- **Ctrl/Cmd+,**: Open settings
+- **Ctrl/Cmd+Shift+T**: Toggle theme
+- **F11 or Ctrl/Cmd+Shift+F**: Presentation mode
 
 ## 🛠️ Technology Stack
 

@@ -1,4 +1,4 @@
-import { Settings, Moon, Sun, Download, Copy, FileText, Image, FileImage, BookOpen, ChevronDown, FolderOpen, Save, Plus, Share2 } from 'lucide-react';
+import { Settings, Moon, Sun, Download, Copy, FileText, Image, FileImage, BookOpen, ChevronDown, FolderOpen, Save, Plus, Share2, Maximize2 } from 'lucide-react';
 import { useState } from 'react';
 import { useStore } from '../../store/useStore';
 import toast from 'react-hot-toast';
@@ -26,7 +26,7 @@ export const Toolbar = ({
   onNewDiagram,
   onShareLink,
 }: ToolbarProps) => {
-  const { settings, updateSettings, toggleSettings, currentDiagram } = useStore();
+  const { settings, updateSettings, toggleSettings, currentDiagram, togglePresentationMode } = useStore();
   const [showExportMenu, setShowExportMenu] = useState(false);
   const isDark = settings.editor.theme === 'dark';
 
@@ -191,6 +191,14 @@ export const Toolbar = ({
         </div>
 
         <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-2" />
+
+        <button
+          onClick={togglePresentationMode}
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+          title="Presentation mode (F11)"
+        >
+          <Maximize2 className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+        </button>
 
         <button
           onClick={toggleTheme}

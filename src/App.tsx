@@ -6,6 +6,8 @@ import { Preview, PreviewRef } from './components/Preview/Preview';
 import { Toolbar } from './components/Toolbar/Toolbar';
 import { Settings } from './components/Settings/Settings';
 import { Examples } from './components/Examples/Examples';
+import { Tabs } from './components/UI/Tabs';
+import { PresentationMode } from './components/UI/PresentationMode';
 import { useStore } from './store/useStore';
 import { exportToPNG, exportToSVG, exportToPDF, copyDiagramToClipboard } from './utils/export';
 import { openFile, saveFile, encodeDiagramToURL, decodeDiagramFromURL } from './utils/fileOperations';
@@ -192,6 +194,7 @@ function App() {
   };
 
   // Keyboard shortcuts
+  const { togglePresentationMode } = useStore();
   useKeyboardShortcuts({
     onSave: handleSaveFile,
     onExport: handleExportPNG,
@@ -200,51 +203,58 @@ function App() {
     onSettings: toggleSettings,
     onExamples: () => setShowExamples(true),
     onToggleTheme: handleToggleTheme,
+    onPresentationMode: togglePresentationMode,
   });
 
   return (
-    <div className="h-screen flex flex-col bg-white dark:bg-gray-900">
-      <Toolbar
-        onExportPNG={handleExportPNG}
-        onExportSVG={handleExportSVG}
-        onExportPDF={handleExportPDF}
-        onCopyDiagram={handleCopyDiagram}
-        onOpenExamples={() => setShowExamples(true)}
-        onOpenFile={handleOpenFile}
-        onSaveFile={handleSaveFile}
-        onNewDiagram={handleNewDiagram}
-        onShareLink={handleShareLink}
-      />
-
-      <div className="flex-1 flex overflow-hidden">
-        {/* Editor Pane */}
-        <div
-          className="overflow-hidden border-r border-gray-200 dark:border-gray-700"
-          style={{ width: `${editorWidth}%` }}
-        >
-          <Editor />
-        </div>
-
-        {/* Resizer */}
-        <div
-          className="w-1 bg-gray-200 dark:bg-gray-700 hover:bg-blue-500 cursor-col-resize transition-colors"
-          onMouseDown={handleMouseDown}
-          style={{ cursor: isDragging ? 'col-resize' : 'col-resize' }}
+    <>
+      <div className="h-screen flex flex-col bg-white dark:bg-gray-900">
+        <Toolbar
+          onExportPNG={handleExportPNG}
+          onExportSVG={handleExportSVG}
+          onExportPDF={handleExportPDF}
+          onCopyDiagram={handleCopyDiagram}
+          onOpenExamples={() => setShowExamples(true)}
+          onOpenFile={handleOpenFile}
+          onSaveFile={handleSaveFile}
+          onNewDiagram={handleNewDiagram}
+          onShareLink={handleShareLink}
         />
 
-        {/* Preview Pane */}
-        <div
-          className="overflow-hidden"
-          style={{ width: `${100 - editorWidth}%` }}
-        >
-          <Preview ref={previewRef} />
+        <Tabs />
+
+        <div className="flex-1 flex overflow-hidden">
+          {/* Editor Pane */}
+          <div
+            className="overflow-hidden border-r border-gray-200 dark:border-gray-700"
+            style={{ width: `${editorWidth}%` }}
+          >
+            <Editor />
+          </div>
+
+          {/* Resizer */}
+          <div
+            className="w-1 bg-gray-200 dark:bg-gray-700 hover:bg-blue-500 cursor-col-resize transition-colors"
+            onMouseDown={handleMouseDown}
+            style={{ cursor: isDragging ? 'col-resize' : 'col-resize' }}
+          />
+
+          {/* Preview Pane */}
+          <div
+            className="overflow-hidden"
+            style={{ width: `${100 - editorWidth}%` }}
+          >
+            <Preview ref={previewRef} />
+          </div>
         </div>
+
+        <Settings />
+        <Examples isOpen={showExamples} onClose={() => setShowExamples(false)} />
+        <Toaster position="bottom-right" />
       </div>
 
-      <Settings />
-      <Examples isOpen={showExamples} onClose={() => setShowExamples(false)} />
-      <Toaster position="bottom-right" />
-    </div>
+      <PresentationMode previewRef={previewRef} />
+    </>
   );
 }
 

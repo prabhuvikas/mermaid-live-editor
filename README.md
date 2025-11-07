@@ -95,6 +95,37 @@ The app will be available at `http://localhost:3000`
 
 See [Plan.md](./Plan.md) for the complete feature roadmap and implementation plan.
 
+## 🌐 Deploy to Production (FREE Forever!)
+
+Want to host this app for free, forever? Deploy it on **Oracle Cloud Infrastructure (OCI) Free Tier**!
+
+### Quick Start: One-Command Deployment
+
+On your fresh OCI Ubuntu instance, run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/prabhuvikas/mermaid-live-editor/claude/plan-mermaid-app-features-011CUtTBzLJd4kRFSaoTxzwB/scripts/deploy-oci.sh | bash
+```
+
+**That's it!** Your app will be live in ~5 minutes at `http://YOUR_OCI_IP`
+
+### Detailed Guide
+
+See [DEPLOYMENT_OCI.md](./DEPLOYMENT_OCI.md) for:
+- Complete step-by-step setup
+- HTTPS/SSL configuration with Let's Encrypt
+- Auto-updates and backups
+- Performance optimization
+- Troubleshooting guide
+
+### Why OCI Free Tier?
+
+- ✅ **100% Free Forever** - No time limits, no charges
+- ✅ **Generous Resources** - Up to 4 cores & 24GB RAM (ARM)
+- ✅ **Always-On** - 24/7 uptime
+- ✅ **Fast & Reliable** - Enterprise-grade infrastructure
+- ✅ **Global** - Multiple regions available
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these guidelines:

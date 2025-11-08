@@ -1,176 +1,211 @@
-import { X } from 'lucide-react';
 import { useStore } from '../../store/useStore';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '../ui/dialog';
+import { Label } from '../ui/label';
+import { Slider } from '../ui/slider';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Switch } from '../ui/switch';
+import { ScrollArea } from '../ui/scroll-area';
+import { Separator } from '../ui/separator';
 
 export const Settings = () => {
   const { settings, updateSettings, isSettingsOpen, toggleSettings } = useStore();
 
-  if (!isSettingsOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Settings</h2>
-          <button
-            onClick={toggleSettings}
-            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <Dialog open={isSettingsOpen} onOpenChange={toggleSettings}>
+      <DialogContent className="max-w-2xl max-h-[80vh]">
+        <DialogHeader>
+          <DialogTitle>Settings</DialogTitle>
+          <DialogDescription>
+            Customize your editor and preview preferences
+          </DialogDescription>
+        </DialogHeader>
 
-        <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-          <section className="mb-6">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-              Editor Settings
-            </h3>
-
-            <div className="space-y-4">
+        <ScrollArea className="h-[60vh] pr-4">
+          <div className="space-y-6">
+            {/* Editor Settings */}
+            <section className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Font Size: {settings.editor.fontSize}px
-                </label>
-                <input
-                  type="range"
-                  min="10"
-                  max="24"
-                  value={settings.editor.fontSize}
-                  onChange={(e) =>
-                    updateSettings({
-                      editor: { ...settings.editor, fontSize: parseInt(e.target.value) },
-                    })
-                  }
-                  className="w-full"
-                />
+                <h3 className="text-lg font-medium mb-4">Editor Settings</h3>
               </div>
 
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="fontSize">Font Size</Label>
+                    <span className="text-sm text-muted-foreground">
+                      {settings.editor.fontSize}px
+                    </span>
+                  </div>
+                  <Slider
+                    id="fontSize"
+                    min={10}
+                    max={24}
+                    step={1}
+                    value={[settings.editor.fontSize]}
+                    onValueChange={([value]) =>
+                      updateSettings({
+                        editor: { ...settings.editor, fontSize: value },
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="tabSize">Tab Size</Label>
+                  <Select
+                    value={settings.editor.tabSize.toString()}
+                    onValueChange={(value) =>
+                      updateSettings({
+                        editor: { ...settings.editor, tabSize: parseInt(value) },
+                      })
+                    }
+                  >
+                    <SelectTrigger id="tabSize">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2">2 spaces</SelectItem>
+                      <SelectItem value="4">4 spaces</SelectItem>
+                      <SelectItem value="8">8 spaces</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="wordWrap" className="flex flex-col gap-1">
+                    <span>Word Wrap</span>
+                    <span className="text-sm font-normal text-muted-foreground">
+                      Wrap long lines in the editor
+                    </span>
+                  </Label>
+                  <Switch
+                    id="wordWrap"
+                    checked={settings.editor.wordWrap}
+                    onCheckedChange={(checked) =>
+                      updateSettings({
+                        editor: { ...settings.editor, wordWrap: checked },
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </section>
+
+            <Separator />
+
+            {/* Preview Settings */}
+            <section className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Tab Size
-                </label>
-                <select
-                  value={settings.editor.tabSize}
-                  onChange={(e) =>
-                    updateSettings({
-                      editor: { ...settings.editor, tabSize: parseInt(e.target.value) },
-                    })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                >
-                  <option value="2">2 spaces</option>
-                  <option value="4">4 spaces</option>
-                  <option value="8">8 spaces</option>
-                </select>
+                <h3 className="text-lg font-medium mb-4">Preview Settings</h3>
               </div>
 
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="wordWrap"
-                  checked={settings.editor.wordWrap}
-                  onChange={(e) =>
-                    updateSettings({
-                      editor: { ...settings.editor, wordWrap: e.target.checked },
-                    })
-                  }
-                  className="w-4 h-4 text-blue-600 rounded"
-                />
-                <label htmlFor="wordWrap" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                  Enable word wrap
-                </label>
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Label htmlFor="mermaidTheme">Mermaid Theme</Label>
+                  <Select
+                    value={settings.preview.mermaidTheme}
+                    onValueChange={(value) =>
+                      updateSettings({
+                        preview: {
+                          ...settings.preview,
+                          mermaidTheme: value as any,
+                        },
+                      })
+                    }
+                  >
+                    <SelectTrigger id="mermaidTheme">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="default">Default</SelectItem>
+                      <SelectItem value="forest">Forest</SelectItem>
+                      <SelectItem value="dark">Dark</SelectItem>
+                      <SelectItem value="neutral">Neutral</SelectItem>
+                      <SelectItem value="base">Base</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="padding">Padding</Label>
+                    <span className="text-sm text-muted-foreground">
+                      {settings.preview.padding}px
+                    </span>
+                  </div>
+                  <Slider
+                    id="padding"
+                    min={0}
+                    max={100}
+                    step={5}
+                    value={[settings.preview.padding]}
+                    onValueChange={([value]) =>
+                      updateSettings({
+                        preview: { ...settings.preview, padding: value },
+                      })
+                    }
+                  />
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <section className="mb-6">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-              Preview Settings
-            </h3>
+            <Separator />
 
-            <div className="space-y-4">
+            {/* General Settings */}
+            <section className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Mermaid Theme
-                </label>
-                <select
-                  value={settings.preview.mermaidTheme}
-                  onChange={(e) =>
-                    updateSettings({
-                      preview: {
-                        ...settings.preview,
-                        mermaidTheme: e.target.value as any,
-                      },
-                    })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                >
-                  <option value="default">Default</option>
-                  <option value="forest">Forest</option>
-                  <option value="dark">Dark</option>
-                  <option value="neutral">Neutral</option>
-                  <option value="base">Base</option>
-                </select>
+                <h3 className="text-lg font-medium mb-4">General Settings</h3>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Padding: {settings.preview.padding}px
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={settings.preview.padding}
-                  onChange={(e) =>
-                    updateSettings({
-                      preview: { ...settings.preview, padding: parseInt(e.target.value) },
-                    })
-                  }
-                  className="w-full"
-                />
-              </div>
-            </div>
-          </section>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="autoSave" className="flex flex-col gap-1">
+                    <span>Auto-Save</span>
+                    <span className="text-sm font-normal text-muted-foreground">
+                      Automatically save changes to local storage
+                    </span>
+                  </Label>
+                  <Switch
+                    id="autoSave"
+                    checked={settings.autoSave}
+                    onCheckedChange={(checked) =>
+                      updateSettings({ autoSave: checked })
+                    }
+                  />
+                </div>
 
-          <section>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-              General Settings
-            </h3>
-
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="autoSave"
-                  checked={settings.autoSave}
-                  onChange={(e) => updateSettings({ autoSave: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded"
-                />
-                <label htmlFor="autoSave" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                  Enable auto-save
-                </label>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="debounceDelay">Debounce Delay</Label>
+                    <span className="text-sm text-muted-foreground">
+                      {settings.debounceDelay}ms
+                    </span>
+                  </div>
+                  <Slider
+                    id="debounceDelay"
+                    min={100}
+                    max={2000}
+                    step={100}
+                    value={[settings.debounceDelay]}
+                    onValueChange={([value]) =>
+                      updateSettings({ debounceDelay: value })
+                    }
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Delay before rendering diagram after typing
+                  </p>
+                </div>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Debounce Delay: {settings.debounceDelay}ms
-                </label>
-                <input
-                  type="range"
-                  min="100"
-                  max="2000"
-                  step="100"
-                  value={settings.debounceDelay}
-                  onChange={(e) =>
-                    updateSettings({ debounceDelay: parseInt(e.target.value) })
-                  }
-                  className="w-full"
-                />
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+            </section>
+          </div>
+        </ScrollArea>
+      </DialogContent>
+    </Dialog>
   );
 };

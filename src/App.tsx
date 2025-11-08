@@ -208,7 +208,7 @@ function App() {
 
   return (
     <>
-      <div className="h-screen flex flex-col bg-white dark:bg-gray-900">
+      <div className="h-screen flex flex-col bg-background">
         <Toolbar
           onExportPNG={handleExportPNG}
           onExportSVG={handleExportSVG}
@@ -226,7 +226,7 @@ function App() {
         <div className="flex-1 flex overflow-hidden">
           {/* Editor Pane */}
           <div
-            className="overflow-hidden border-r border-gray-200 dark:border-gray-700"
+            className="overflow-hidden border-r"
             style={{ width: `${editorWidth}%` }}
           >
             <Editor />
@@ -234,14 +234,13 @@ function App() {
 
           {/* Resizer */}
           <div
-            className="w-1 bg-gray-200 dark:bg-gray-700 hover:bg-blue-500 cursor-col-resize transition-colors"
+            className="w-1 bg-border hover:bg-primary cursor-col-resize transition-colors"
             onMouseDown={handleMouseDown}
-            style={{ cursor: isDragging ? 'col-resize' : 'col-resize' }}
           />
 
           {/* Preview Pane */}
           <div
-            className="overflow-hidden"
+            className="overflow-hidden bg-muted/30"
             style={{ width: `${100 - editorWidth}%` }}
           >
             <Preview ref={previewRef} />

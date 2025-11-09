@@ -155,20 +155,20 @@ export const Toolbar = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem onClick={onExportPNG}>
+            <DropdownMenuItem onSelect={onExportPNG}>
               <FileImage className="w-4 h-4 mr-2" />
               Export as PNG
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onExportSVG}>
+            <DropdownMenuItem onSelect={onExportSVG}>
               <FileImage className="w-4 h-4 mr-2" />
               Export as SVG
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onExportPDF}>
+            <DropdownMenuItem onSelect={onExportPDF}>
               <FileImage className="w-4 h-4 mr-2" />
               Export as PDF
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={onCopyDiagram}>
+            <DropdownMenuItem onSelect={onCopyDiagram}>
               <Copy className="w-4 h-4 mr-2" />
               Copy as Image
             </DropdownMenuItem>

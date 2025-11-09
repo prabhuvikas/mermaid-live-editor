@@ -11,13 +11,25 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    // Exclude mermaid and all its dependencies from pre-bundling
+    // Mermaid uses dynamic imports which are incompatible with Vite's optimizer
     exclude: ['mermaid'],
   },
   server: {
     port: 3000,
+    // Disable dependency optimization caching to avoid stale issues
+    fs: {
+      strict: false,
+    },
   },
   build: {
     outDir: 'dist',
     sourcemap: true,
+    // Ensure dynamic imports work properly in production
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
 })

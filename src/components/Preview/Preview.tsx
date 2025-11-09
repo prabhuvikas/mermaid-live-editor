@@ -3,6 +3,7 @@ import mermaid from 'mermaid';
 import { useStore } from '../../store/useStore';
 import { AlertCircle, ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import { Button } from '../ui/button';
+import { Card } from '../ui/card';
 
 export interface PreviewRef {
   getContainerElement: () => HTMLElement | null;
@@ -125,7 +126,7 @@ export const Preview = forwardRef<PreviewRef>((_, ref) => {
   return (
     <div className="w-full h-full overflow-hidden relative">
       {/* Zoom Controls */}
-      <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 border border-gray-200 dark:border-gray-700">
+      <Card className="absolute top-4 right-4 z-50 flex flex-col gap-2 p-2 shadow-lg">
         <Button
           variant="ghost"
           size="icon"
@@ -153,10 +154,10 @@ export const Preview = forwardRef<PreviewRef>((_, ref) => {
         >
           <Maximize2 className="h-4 w-4" />
         </Button>
-        <div className="text-xs text-center text-gray-600 dark:text-gray-400 px-1">
+        <div className="text-xs text-center text-muted-foreground px-1 font-medium">
           {Math.round(zoom * 100)}%
         </div>
-      </div>
+      </Card>
 
       <div
         ref={viewportRef}

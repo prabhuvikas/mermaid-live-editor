@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import mermaid from 'mermaid';
 import { useStore } from '../../store/useStore';
-import { AlertCircle, ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
+import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
+import toast from 'react-hot-toast';
 
 export interface PreviewRef {
   getContainerElement: () => HTMLElement | null;
@@ -14,7 +15,6 @@ export const Preview = forwardRef<PreviewRef>((_, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [renderError, setRenderError] = useState<string | null>(null);
 
   // Zoom and pan state
   const [zoom, setZoom] = useState(1);
@@ -90,7 +90,6 @@ export const Preview = forwardRef<PreviewRef>((_, ref) => {
       }
 
       setIsLoading(true);
-      setRenderError(null);
       setError(null);
 
       try {
@@ -109,8 +108,11 @@ export const Preview = forwardRef<PreviewRef>((_, ref) => {
         }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        setRenderError(errorMessage);
         setError(errorMessage);
+        toast.error(`Syntax Error: ${errorMessage}`, {
+          duration: 4000,
+          position: 'bottom-right',
+        });
         console.error('Mermaid rendering error:', error);
       } finally {
         setIsLoading(false);
@@ -178,27 +180,10 @@ export const Preview = forwardRef<PreviewRef>((_, ref) => {
           </div>
         )}
 
-        {renderError && (
-          <div className="max-w-2xl mx-auto p-6 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold text-red-900 dark:text-red-100 mb-1">
-                  Rendering Error
-                </h3>
-                <p className="text-sm text-red-700 dark:text-red-300 whitespace-pre-wrap">
-                  {renderError}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
         <div
           ref={containerRef}
           className="mermaid-container transition-transform"
           style={{
-            display: renderError ? 'none' : 'block',
             transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
             transformOrigin: 'center center',
             userSelect: isDragging ? 'none' : 'auto',

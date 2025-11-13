@@ -11,9 +11,10 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    // Exclude mermaid and all its dependencies from pre-bundling
+    // Exclude mermaid and problematic dependencies from pre-bundling
     // Mermaid uses dynamic imports which are incompatible with Vite's optimizer
-    exclude: ['mermaid'],
+    // dayjs has export issues when pre-bundled
+    exclude: ['mermaid', 'dayjs'],
   },
   server: {
     port: 3000,

@@ -69,10 +69,10 @@ export const Toolbar = ({
   };
 
   return (
-    <div className="h-14 border-b bg-background flex items-center justify-between px-4">
+    <div className="h-14 border-b border-glow bg-background flex items-center justify-between px-4 relative">
       <div className="flex items-center gap-3">
-        <FileText className="w-6 h-6 text-primary" />
-        <h1 className="text-lg font-semibold">
+        <FileText className="w-6 h-6 text-primary animate-pulse" />
+        <h1 className="text-lg font-semibold text-glow-cyan">
           Mermaid Live Editor
         </h1>
       </div>

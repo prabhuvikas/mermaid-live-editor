@@ -208,40 +208,46 @@ function App() {
 
   return (
     <>
-      <div className="h-screen flex flex-col bg-background">
-        <Toolbar
-          onExportPNG={handleExportPNG}
-          onExportSVG={handleExportSVG}
-          onExportPDF={handleExportPDF}
-          onCopyDiagram={handleCopyDiagram}
-          onOpenExamples={() => setShowExamples(true)}
-          onOpenFile={handleOpenFile}
-          onSaveFile={handleSaveFile}
-          onNewDiagram={handleNewDiagram}
-          onShareLink={handleShareLink}
-        />
+      <div className="h-screen flex flex-col bg-background relative">
+        {/* Toolbar with slide-in animation */}
+        <div className="animate-slide-in-top" style={{ animationDelay: '0.1s', opacity: 0 }}>
+          <Toolbar
+            onExportPNG={handleExportPNG}
+            onExportSVG={handleExportSVG}
+            onExportPDF={handleExportPDF}
+            onCopyDiagram={handleCopyDiagram}
+            onOpenExamples={() => setShowExamples(true)}
+            onOpenFile={handleOpenFile}
+            onSaveFile={handleSaveFile}
+            onNewDiagram={handleNewDiagram}
+            onShareLink={handleShareLink}
+          />
+        </div>
 
-        <Tabs />
+        {/* Tabs with slight delay */}
+        <div className="animate-slide-in-top" style={{ animationDelay: '0.2s', opacity: 0 }}>
+          <Tabs />
+        </div>
 
         <div className="flex-1 flex overflow-hidden">
-          {/* Editor Pane */}
+          {/* Editor Pane with slide-in from left */}
           <div
-            className="overflow-hidden border-r"
-            style={{ width: `${editorWidth}%` }}
+            className="overflow-hidden border-r border-glow animate-slide-in-left"
+            style={{ width: `${editorWidth}%`, animationDelay: '0.3s', opacity: 0 }}
           >
             <Editor />
           </div>
 
-          {/* Resizer */}
+          {/* Resizer with glow effect */}
           <div
-            className="w-1 bg-border hover:bg-primary cursor-col-resize transition-colors"
+            className="w-1 bg-primary/30 hover:bg-primary cursor-col-resize transition-all duration-300 hover:shadow-[0_0_10px_hsl(180_100%_50%/0.5)]"
             onMouseDown={handleMouseDown}
           />
 
-          {/* Preview Pane */}
+          {/* Preview Pane with slide-in from right */}
           <div
-            className="overflow-hidden bg-muted/30"
-            style={{ width: `${100 - editorWidth}%` }}
+            className="overflow-hidden bg-muted/20 animate-slide-in-right"
+            style={{ width: `${100 - editorWidth}%`, animationDelay: '0.3s', opacity: 0 }}
           >
             <Preview ref={previewRef} />
           </div>

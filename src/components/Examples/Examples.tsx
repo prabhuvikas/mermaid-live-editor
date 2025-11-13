@@ -41,31 +41,31 @@ export const Examples = ({ isOpen, onClose }: ExamplesProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl max-h-[85vh] overflow-hidden">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
+      <div className="bg-background border border-glow rounded-lg shadow-[0_0_30px_hsl(180_100%_50%/0.3)] w-full max-w-4xl max-h-[85vh] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <div className="flex items-center justify-between p-4 border-b border-glow">
+          <h2 className="text-xl font-semibold text-primary text-glow-cyan">
             Examples & Templates
           </h2>
           <button
             onClick={onClose}
-            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            className="p-1 hover:bg-destructive/20 hover:text-destructive rounded transition-all duration-200"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Search and Filter */}
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700 space-y-4">
+        <div className="p-4 border-b border-glow space-y-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-primary/30 rounded-lg bg-muted/20 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
 
@@ -74,10 +74,10 @@ export const Examples = ({ isOpen, onClose }: ExamplesProps) => {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                className={`px-3 py-1 rounded-full text-sm transition-all duration-200 ${
                   selectedCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-primary text-primary-foreground shadow-[0_0_10px_hsl(180_100%_50%/0.5)]'
+                    : 'bg-muted/30 text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:shadow-[0_0_5px_hsl(180_100%_50%/0.2)]'
                 }`}
               >
                 {category}
@@ -89,7 +89,7 @@ export const Examples = ({ isOpen, onClose }: ExamplesProps) => {
         {/* Templates Grid */}
         <div className="p-4 overflow-y-auto max-h-[calc(85vh-200px)]">
           {filteredTemplates.length === 0 ? (
-            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+            <div className="text-center py-12 text-muted-foreground">
               No templates found matching your search.
             </div>
           ) : (
@@ -97,22 +97,22 @@ export const Examples = ({ isOpen, onClose }: ExamplesProps) => {
               {filteredTemplates.map((template) => (
                 <div
                   key={template.id}
-                  className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-500 dark:hover:border-blue-400 transition-colors cursor-pointer"
+                  className="border border-primary/30 rounded-lg p-4 hover:border-primary hover:shadow-[0_0_15px_hsl(180_100%_50%/0.3)] transition-all duration-200 cursor-pointer bg-muted/10"
                   onClick={() => loadTemplate(template)}
                 >
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                    <h3 className="font-semibold text-foreground">
                       {template.name}
                     </h3>
-                    <span className="px-2 py-1 text-xs rounded bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                    <span className="px-2 py-1 text-xs rounded bg-primary/20 text-primary border border-primary/30">
                       {template.category}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  <p className="text-sm text-muted-foreground mb-3">
                     {template.description}
                   </p>
-                  <pre className="text-xs bg-gray-50 dark:bg-gray-900 p-2 rounded overflow-hidden">
-                    <code className="text-gray-700 dark:text-gray-300 line-clamp-3">
+                  <pre className="text-xs bg-muted/20 p-2 rounded overflow-hidden border border-primary/10">
+                    <code className="text-muted-foreground line-clamp-3">
                       {template.code}
                     </code>
                   </pre>

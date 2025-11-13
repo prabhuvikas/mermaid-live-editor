@@ -77,9 +77,89 @@ export const Preview = forwardRef<PreviewRef>((_, ref) => {
   useEffect(() => {
     mermaid.initialize({
       startOnLoad: false,
-      theme: settings.preview.mermaidTheme,
+      theme: settings.preview.mermaidTheme === 'dark' ? 'dark' : 'base',
       securityLevel: 'loose',
-      fontFamily: 'monospace',
+      fontFamily: '"Barlow Condensed", -apple-system, system-ui, sans-serif',
+      themeVariables: {
+        // Primary colors - Neon Cyberpunk palette
+        primaryColor: '#00ffff',           // Electric cyan
+        primaryTextColor: '#0a0e27',       // Deep navy for text on cyan
+        primaryBorderColor: '#00ffff',     // Cyan border
+
+        // Secondary colors
+        secondaryColor: '#ff00ff',         // Magenta
+        secondaryTextColor: '#ffffff',
+        secondaryBorderColor: '#ff00ff',
+
+        // Tertiary colors
+        tertiaryColor: '#ccff00',          // Lime
+        tertiaryTextColor: '#0a0e27',
+        tertiaryBorderColor: '#ccff00',
+
+        // Background and general
+        background: '#0a0e27',             // Deep navy
+        mainBkg: '#00ffff',                // Cyan for nodes
+        secondBkg: '#ff00ff',              // Magenta for secondary nodes
+        tertiaryBkg: '#ccff00',            // Lime for tertiary nodes
+
+        // Text colors
+        textColor: '#d4feff',              // Bright cyan-white
+        lineColor: '#00ffff',              // Cyan lines
+
+        // Node styling
+        nodeBorder: '#00ffff',
+        clusterBkg: 'rgba(0, 255, 255, 0.1)',
+        clusterBorder: '#00ffff',
+
+        // Edge/Arrow colors
+        edgeLabelBackground: 'rgba(10, 14, 39, 0.9)',
+
+        // State diagram colors
+        labelColor: '#0a0e27',
+
+        // Sequence diagram
+        actorBorder: '#00ffff',
+        actorBkg: '#0a0e27',
+        actorTextColor: '#00ffff',
+        actorLineColor: '#00ffff',
+        signalColor: '#00ffff',
+        signalTextColor: '#d4feff',
+
+        // Gantt diagram
+        gridColor: 'rgba(0, 255, 255, 0.2)',
+        todayLineColor: '#ff00ff',
+
+        // Git graph
+        git0: '#00ffff',
+        git1: '#ff00ff',
+        git2: '#ccff00',
+        git3: '#00d4ff',
+        git4: '#ff00cc',
+        git5: '#aaff00',
+        git6: '#00ffaa',
+        git7: '#ff0088',
+
+        // Pie chart
+        pie1: '#00ffff',
+        pie2: '#ff00ff',
+        pie3: '#ccff00',
+        pie4: '#00d4ff',
+        pie5: '#ff00cc',
+        pie6: '#aaff00',
+        pie7: '#00ffaa',
+        pie8: '#ff0088',
+        pie9: '#0088ff',
+        pie10: '#ff8800',
+        pie11: '#88ff00',
+        pie12: '#ff0044',
+
+        // Class diagram
+        classText: '#0a0e27',
+
+        // ER diagram
+        attributeBackgroundColorOdd: 'rgba(0, 255, 255, 0.1)',
+        attributeBackgroundColorEven: 'rgba(255, 0, 255, 0.1)',
+      },
     });
   }, [settings.preview.mermaidTheme]);
 

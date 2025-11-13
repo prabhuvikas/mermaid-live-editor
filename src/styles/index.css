@@ -232,8 +232,76 @@
   font-family: 'Azeret Mono', monospace !important;
 }
 
-/* Mermaid diagram styling improvements */
+/* Mermaid diagram styling - Neon Cyberpunk enhancements */
 .mermaid-container svg {
   max-width: 100%;
   height: auto;
+  font-family: 'Barlow Condensed', sans-serif !important;
+}
+
+/* Add neon glow to diagram nodes and paths */
+.mermaid-container svg .node rect,
+.mermaid-container svg .node circle,
+.mermaid-container svg .node ellipse,
+.mermaid-container svg .node polygon,
+.mermaid-container svg .node path {
+  filter: drop-shadow(0 0 3px hsl(180 100% 50% / 0.4));
+  transition: filter 0.3s ease;
+}
+
+.mermaid-container svg .node:hover rect,
+.mermaid-container svg .node:hover circle,
+.mermaid-container svg .node:hover ellipse,
+.mermaid-container svg .node:hover polygon,
+.mermaid-container svg .node:hover path {
+  filter: drop-shadow(0 0 8px hsl(180 100% 50% / 0.6));
+}
+
+/* Enhance edge/line glow */
+.mermaid-container svg .edgePath path.path,
+.mermaid-container svg line {
+  filter: drop-shadow(0 0 2px hsl(180 100% 50% / 0.3));
+  stroke-width: 2px;
+}
+
+/* Style for different node types */
+.mermaid-container svg .node.secondary rect,
+.mermaid-container svg .node.secondary circle {
+  filter: drop-shadow(0 0 3px hsl(280 100% 50% / 0.4));
+}
+
+.mermaid-container svg .node.tertiary rect,
+.mermaid-container svg .node.tertiary circle {
+  filter: drop-shadow(0 0 3px hsl(90 100% 50% / 0.4));
+}
+
+/* Enhance text readability */
+.mermaid-container svg text {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Cluster/subgraph styling */
+.mermaid-container svg .cluster rect {
+  filter: drop-shadow(0 0 5px hsl(180 100% 50% / 0.2));
+}
+
+/* Actor boxes in sequence diagrams */
+.mermaid-container svg .actor {
+  filter: drop-shadow(0 0 4px hsl(180 100% 50% / 0.4));
+}
+
+/* State diagram states */
+.mermaid-container svg .statediagram-state rect {
+  filter: drop-shadow(0 0 3px hsl(180 100% 50% / 0.4));
+}
+
+/* Gantt chart bars */
+.mermaid-container svg .task {
+  filter: drop-shadow(0 0 2px hsl(180 100% 50% / 0.3));
+}
+
+/* Pie chart slices */
+.mermaid-container svg .pieCircle {
+  filter: drop-shadow(0 0 4px hsl(180 100% 50% / 0.3));
 }

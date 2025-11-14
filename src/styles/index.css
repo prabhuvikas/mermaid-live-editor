@@ -1,0 +1,307 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Technical Dark Theme - Graph Paper + Neon */
+    --background: 220 30% 8%;          /* Deep navy #0a0e27 */
+    --foreground: 180 100% 90%;        /* Bright cyan-white #d4feff */
+
+    --card: 220 30% 10%;               /* Slightly lighter than bg */
+    --card-foreground: 180 100% 90%;
+
+    --popover: 220 30% 12%;
+    --popover-foreground: 180 100% 90%;
+
+    --primary: 180 100% 50%;           /* Electric cyan #00ffff */
+    --primary-foreground: 220 30% 8%;
+
+    --secondary: 280 100% 50%;         /* Electric magenta #ff00ff */
+    --secondary-foreground: 220 30% 8%;
+
+    --accent: 90 100% 50%;             /* Bright lime #ccff00 */
+    --accent-foreground: 220 30% 8%;
+
+    --muted: 220 30% 20%;
+    --muted-foreground: 180 20% 60%;
+
+    --destructive: 0 100% 60%;         /* Bright red */
+    --destructive-foreground: 220 30% 8%;
+
+    --border: 180 100% 50% / 0.2;      /* Cyan with opacity */
+    --input: 220 30% 15%;
+    --ring: 180 100% 50%;              /* Cyan glow */
+
+    --radius: 0.25rem;                 /* Sharper, more technical */
+
+    /* Custom variables for effects */
+    --glow-cyan: 0 0 10px hsl(180 100% 50% / 0.5);
+    --glow-magenta: 0 0 10px hsl(280 100% 50% / 0.5);
+    --glow-lime: 0 0 10px hsl(90 100% 50% / 0.5);
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Barlow Condensed', -apple-system, sans-serif;
+    font-weight: 500;
+    line-height: 1.4;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.02em;
+
+    /* Graph paper background */
+    background-image:
+      linear-gradient(hsl(180 100% 50% / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(180 100% 50% / 0.03) 1px, transparent 1px),
+      linear-gradient(hsl(180 100% 50% / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(180 100% 50% / 0.08) 1px, transparent 1px);
+    background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+
+    /* Subtle noise texture */
+    background-blend-mode: overlay;
+  }
+
+  /* Add noise texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+
+  #root {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Monospace for code */
+  code, pre, .font-mono {
+    font-family: 'Azeret Mono', 'Courier New', monospace !important;
+    font-weight: 500;
+  }
+
+  /* Headings use Orbitron */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+}
+
+/* Custom animations */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px hsl(180 100% 50% / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.5);
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .animate-slide-in-top {
+    animation: slideInFromTop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInFromLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInFromRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 10px hsl(180 100% 50% / 0.5);
+  }
+
+  .text-glow-magenta {
+    text-shadow: 0 0 10px hsl(280 100% 50% / 0.5);
+  }
+
+  .box-glow-cyan {
+    box-shadow: 0 0 10px hsl(180 100% 50% / 0.3), inset 0 0 10px hsl(180 100% 50% / 0.1);
+  }
+
+  .box-glow-magenta {
+    box-shadow: 0 0 10px hsl(280 100% 50% / 0.3), inset 0 0 10px hsl(280 100% 50% / 0.1);
+  }
+
+  .border-glow {
+    border-color: hsl(180 100% 50% / 0.5);
+    box-shadow: 0 0 5px hsl(180 100% 50% / 0.3);
+  }
+
+  .technical-border {
+    border: 1px solid hsl(180 100% 50% / 0.3);
+    position: relative;
+  }
+
+  .technical-border::before,
+  .technical-border::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1px solid hsl(180 100% 50% / 0.6);
+  }
+
+  .technical-border::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .technical-border::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+}
+
+/* Monaco Editor customization */
+.monaco-editor {
+  font-family: 'Azeret Mono', monospace !important;
+}
+
+/* Mermaid diagram styling - Neon Cyberpunk enhancements */
+.mermaid-container svg {
+  max-width: 100%;
+  height: auto;
+  font-family: 'Barlow Condensed', sans-serif !important;
+}
+
+/* Add neon glow to diagram nodes and paths */
+.mermaid-container svg .node rect,
+.mermaid-container svg .node circle,
+.mermaid-container svg .node ellipse,
+.mermaid-container svg .node polygon,
+.mermaid-container svg .node path {
+  filter: drop-shadow(0 0 3px hsl(180 100% 50% / 0.4));
+  transition: filter 0.3s ease;
+}
+
+.mermaid-container svg .node:hover rect,
+.mermaid-container svg .node:hover circle,
+.mermaid-container svg .node:hover ellipse,
+.mermaid-container svg .node:hover polygon,
+.mermaid-container svg .node:hover path {
+  filter: drop-shadow(0 0 8px hsl(180 100% 50% / 0.6));
+}
+
+/* Enhance edge/line glow */
+.mermaid-container svg .edgePath path.path,
+.mermaid-container svg line {
+  filter: drop-shadow(0 0 2px hsl(180 100% 50% / 0.3));
+  stroke-width: 2px;
+}
+
+/* Style for different node types */
+.mermaid-container svg .node.secondary rect,
+.mermaid-container svg .node.secondary circle {
+  filter: drop-shadow(0 0 3px hsl(280 100% 50% / 0.4));
+}
+
+.mermaid-container svg .node.tertiary rect,
+.mermaid-container svg .node.tertiary circle {
+  filter: drop-shadow(0 0 3px hsl(90 100% 50% / 0.4));
+}
+
+/* Enhance text readability */
+.mermaid-container svg text {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Cluster/subgraph styling */
+.mermaid-container svg .cluster rect {
+  filter: drop-shadow(0 0 5px hsl(180 100% 50% / 0.2));
+}
+
+/* Actor boxes in sequence diagrams */
+.mermaid-container svg .actor {
+  filter: drop-shadow(0 0 4px hsl(180 100% 50% / 0.4));
+}
+
+/* State diagram states */
+.mermaid-container svg .statediagram-state rect {
+  filter: drop-shadow(0 0 3px hsl(180 100% 50% / 0.4));
+}
+
+/* Gantt chart bars */
+.mermaid-container svg .task {
+  filter: drop-shadow(0 0 2px hsl(180 100% 50% / 0.3));
+}
+
+/* Pie chart slices */
+.mermaid-container svg .pieCircle {
+  filter: drop-shadow(0 0 4px hsl(180 100% 50% / 0.3));
+}

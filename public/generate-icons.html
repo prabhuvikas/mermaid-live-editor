@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate PWA Icons</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    canvas {
+      border: 1px solid #ddd;
+      margin: 10px;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    .instructions {
+      background: #f0f9ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generate PWA Icons</h1>
+  <div class="instructions">
+    <p>Click the buttons below to download the icon files, then save them to the <code>public</code> folder.</p>
+  </div>
+
+  <div>
+    <canvas id="canvas192" width="192" height="192"></canvas>
+    <button onclick="downloadIcon(192)">Download icon-192.png</button>
+  </div>
+
+  <div>
+    <canvas id="canvas512" width="512" height="512"></canvas>
+    <button onclick="downloadIcon(512)">Download icon-512.png</button>
+  </div>
+
+  <script>
+    function drawIcon(size) {
+      const canvas = document.getElementById(`canvas${size}`);
+      const ctx = canvas.getContext('2d');
+
+      // Background
+      ctx.fillStyle = '#3b82f6';
+      ctx.fillRect(0, 0, size, size);
+
+      // Scale factor
+      const scale = size / 512;
+      ctx.save();
+      ctx.scale(scale, scale);
+
+      // Draw flowchart-style icon
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 4;
+
+      // Top box
+      roundRect(ctx, 192, 148, 128, 60, 8);
+
+      // Connector line
+      ctx.beginPath();
+      ctx.moveTo(256, 208);
+      ctx.lineTo(256, 248);
+      ctx.stroke();
+
+      // Arrow
+      ctx.beginPath();
+      ctx.moveTo(248, 243);
+      ctx.lineTo(256, 253);
+      ctx.lineTo(264, 243);
+      ctx.closePath();
+      ctx.fill();
+
+      // Bottom left box
+      roundRect(ctx, 160, 268, 90, 60, 8);
+
+      // Bottom right box
+      roundRect(ctx, 262, 268, 90, 60, 8);
+
+      // Connector lines
+      ctx.beginPath();
+      ctx.moveTo(205, 208);
+      ctx.lineTo(205, 268);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(307, 208);
+      ctx.lineTo(307, 268);
+      ctx.stroke();
+
+      // Bottom arrows
+      ctx.beginPath();
+      ctx.moveTo(201, 263);
+      ctx.lineTo(205, 273);
+      ctx.lineTo(209, 263);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(303, 263);
+      ctx.lineTo(307, 273);
+      ctx.lineTo(311, 263);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function downloadIcon(size) {
+      const canvas = document.getElementById(`canvas${size}`);
+      const link = document.createElement('a');
+      link.download = `icon-${size}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Draw icons on load
+    drawIcon(192);
+    drawIcon(512);
+  </script>
+</body>
+</html>
